@@ -1,4 +1,3 @@
-// Ruta: /app/api/users/[id]/route.ts
 import { supabase } from "@/lib/supabase";
 import { redis }    from "@/lib/redis";
 import { NextResponse } from "next/server";
@@ -13,11 +12,14 @@ async function invalidateCache() {
   }
 }
 
+// Declaramos el tipo correcto para Next.js 15
+type RouteContext = { params: Promise<{ id: string }> };
+
 // ── PUT /api/users/[id] ──
-export async function PUT(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(req: Request, { params }: RouteContext) {
+  // Extraemos el id usando await
+  const { id } = await params; 
+
   const body = await req.json();
   const { nombre, email, telefono, dni } = body;
 
@@ -36,7 +38,7 @@ export async function PUT(
       telefono: telefono || null,
       dni:      dni || null,
     })
-    .eq("id", params.id)
+    .eq("id", id) // Usamos la variable id extraída arriba
     .select()
     .single();
 
@@ -53,14 +55,14 @@ export async function PUT(
 }
 
 // ── DELETE /api/users/[id] ──
-export async function DELETE(
-  _: Request,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(_: Request, { params }: RouteContext) {
+  // Extraemos el id usando await
+  const { id } = await params;
+
   const { error } = await supabase
     .from("usuarios")
     .delete()
-    .eq("id", params.id);
+    .eq("id", id); // Usamos la variable id extraída arriba
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
