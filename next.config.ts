@@ -1,11 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export',
-  basePath: '/crud-app',
-  images: {
-    unoptimized: true,
-  },
+  // Puedes dejar otras configuraciones si las tenías, 
+  // pero NO debe estar "output: 'export'"
 };
 
 export default nextConfig;
