@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Navbar from "./components/Navbar";
 
 export const metadata: Metadata = {
-  title: "Gestión de Tareas",
-  description: "CRUD App con Next.js, Supabase y Redis",
+  title: "TaskManager",
+  description: "CRUD App · Next.js + Supabase + Redis",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -15,24 +16,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
           crossOrigin="anonymous"
         />
-        {/*
-          Este script se ejecuta ANTES que React hidrate,
-          evitando el parpadeo al cargar la página.
-        */}
+        {/* Anti-parpadeo: se ejecuta antes de React */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
               try {
                 var t = localStorage.getItem('theme');
-                var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                var dark = t ? t === 'dark' : prefersDark;
-                if (dark) document.documentElement.classList.add('dark');
+                var sys = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (t ? t === 'dark' : sys) document.documentElement.classList.add('dark');
               } catch(e) {}
             `,
           }}
         />
       </head>
-      <body>{children}</body>
+      <body className="bg-gray-50 dark:bg-slate-950 transition-colors">
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }
