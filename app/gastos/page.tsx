@@ -551,7 +551,7 @@ export default function GastosPage() {
                                            bg-amber-500 hover:bg-amber-400 text-slate-950
                                            text-xs rounded-lg transition-colors font-semibold"
                               >
-                                <i className="fa-solid fa-pen-to-square"></i> Editar
+                                <i className="fa-solid fa-pen-to-square"></i>
                               </button>
                               <button
                                 onClick={() => handleDeleteExpense(exp.id)}
@@ -561,7 +561,7 @@ export default function GastosPage() {
                                            text-xs rounded-lg transition-colors font-semibold disabled:opacity-40"
                               >
                                 <i className={`fa-solid ${deletingId === exp.id ? "fa-spinner fa-spin" : "fa-trash"}`}></i>
-                                Eliminar
+                                
                               </button>
                             </div>
                           </td>
